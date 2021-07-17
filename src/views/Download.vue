@@ -1,9 +1,9 @@
 <template>
-    <p>Download</p>
+  <p>Download</p>
 </template>
 
 <script>
 export default {
-    name: "Download"
-}
+  name: "Download"
+};
 </script>

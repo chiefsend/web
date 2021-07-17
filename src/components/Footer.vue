@@ -1,9 +1,9 @@
 <template>
-  <p>Upload</p>
+  <v-footer>footer</v-footer>
 </template>
 
 <script>
 export default {
-  name: "Upload"
+  name: "Footer"
 };
 </script>

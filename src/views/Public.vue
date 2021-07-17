@@ -1,9 +1,9 @@
 <template>
-    <p>Public</p>
+  <p>Public</p>
 </template>
 
 <script>
 export default {
-    name: "Public"
-}
+  name: "Public"
+};
 </script>
