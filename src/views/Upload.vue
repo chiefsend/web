@@ -23,13 +23,13 @@
 
       <v-stepper-items>
         <v-stepper-content step="1">
-          <SelectStep @done="selectToUpload" />
+          <SelectStep @done="selectToUpload" ref="select" />
         </v-stepper-content>
-        <v-stepper-content @done="uploadToShare" step="2">
-          <UploadStep :files="files" :share="share" />
+        <v-stepper-content step="2">
+          <UploadStep @done="uploadToShare" ref="upload" />
         </v-stepper-content>
         <v-stepper-content step="3">
-          <ShareStep />
+          <ShareStep ref="share" />
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
@@ -46,19 +46,15 @@ export default {
   components: { SelectStep, UploadStep, ShareStep },
   data() {
     return {
-      step: 1,
-      share: null,
-      files: []
+      step: 1
     };
   },
   methods: {
     selectToUpload(share, files) {
-      this.share = share;
-      this.files = files;
+      this.$refs.upload.uploadAll(share, files);
       this.step++;
     },
-    uploadToShare(share) {
-      console.log(share);
+    uploadToShare() {
       this.step++;
     }
   }

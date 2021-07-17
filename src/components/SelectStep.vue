@@ -7,6 +7,7 @@
           v-model="files"
           counter
           show-size
+          multiple
           clearable
         ></v-file-input>
       </v-row>
