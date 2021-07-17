@@ -1,5 +1,7 @@
 <template>
-  <v-footer>footer</v-footer>
+  <v-footer padless>
+    {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
+  </v-footer>
 </template>
 
 <script>
