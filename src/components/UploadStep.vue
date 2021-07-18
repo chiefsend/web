@@ -6,7 +6,7 @@
         <v-list-item v-for="f in files" :key="f.name">
           <v-list-item-avatar>
             <v-progress-circular
-              v-if="f.progress <= 100"
+              v-if="f.progress < 100"
               indeterminate
               color="primary"
             ></v-progress-circular>
@@ -47,6 +47,7 @@ export default {
   },
   methods: {
     uploadAll(share, files) {
+      // data for display
       for (let i = 0; i < files.length; i++) {
         this.files.push({
           name: files[i].name,
@@ -63,9 +64,9 @@ export default {
           ax.post(`/share/${share.id}/attachments`, formdata, {
             onUploadProgress: event => {
               if (!event.lengthComputable) {
-                this.progresses[i] = 100;
+                this.files[i].progress = 100;
               } else {
-                this.progresses[i] = (event.loaded * 100) / event.total; // oder file.size??
+                this.files[i].progress = (event.loaded * 100) / event.total;
               }
             }
           })
@@ -77,8 +78,8 @@ export default {
           // close share
           ax.post(`/share/${share.id}`)
             .then(res => {
-              console.log(res);
-              // this.$emit("done", res.data); FIXME wieder rein
+              console.log(res.data);
+              this.$emit("done", res.data);
             })
             .catch(error => console.log(error));
         })
