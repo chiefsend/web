@@ -21,7 +21,12 @@ export default {
       // and execute them at once
       Promise.all(reqs)
         .then(() => {
-          this.$emit("done", share);
+          // close share
+          ax.post(`/share/${share.id}`)
+            .then(res => {
+              this.$emit("done", res.data);
+            })
+            .catch(error => console.log(error));
         })
         .catch(error => {
           console.error(error);
