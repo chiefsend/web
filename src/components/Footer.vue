@@ -1,6 +1,6 @@
 <template>
-  <v-footer padless>
-    {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
+  <v-footer>
+    {{ new Date().getFullYear() }} — <strong>Chief</strong>
   </v-footer>
 </template>
 
