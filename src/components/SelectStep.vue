@@ -52,7 +52,7 @@ export default {
       expire: 1440,
       limit_items: [1, 2, 5, 15, 50, 200, "unlimited"],
       limit: 50,
-      files: [],
+      files: null,
       name: ""
     };
   },
