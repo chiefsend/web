@@ -2,10 +2,29 @@
   <v-card>
     <v-card-title>Uploading your Files</v-card-title>
     <v-card-text>
-      <v-list-item v-for="prog in progresses" :key="prog">
-        item
-        <v-progress-linear :value="prog"></v-progress-linear>
-      </v-list-item>
+      <v-list>
+        <v-list-item v-for="f in files" :key="f.name">
+          <v-list-item-avatar>
+            <v-progress-circular
+              v-if="f.progress <= 100"
+              indeterminate
+              color="primary"
+            ></v-progress-circular>
+            <v-icon v-else>mdi-check</v-icon>
+          </v-list-item-avatar>
+
+          <v-list-item-content>
+            <v-list-item-title>{{ f.name }}</v-list-item-title>
+            <v-list-item-subtitle>{{ f.size }}</v-list-item-subtitle>
+          </v-list-item-content>
+
+          <v-list-item-action>
+            {{ f.progress }}
+          </v-list-item-action>
+        </v-list-item>
+      </v-list>
+      Total:
+      <v-progress-linear :value="progress"></v-progress-linear>
     </v-card-text>
   </v-card>
 </template>
@@ -17,7 +36,8 @@ export default {
   name: "UploadStep",
   data() {
     return {
-      progresses: [12, 35, 76]
+      progress: 23,
+      files: []
     };
   },
   computed: {
@@ -27,22 +47,30 @@ export default {
   },
   methods: {
     uploadAll(share, files) {
+      for (let i = 0; i < files.length; i++) {
+        this.files.push({
+          name: files[i].name,
+          size: files[i].size,
+          progress: 0
+        });
+      }
       // put all file upload requests in an array
       let reqs = [];
-      let progress = [];
       for (let i = 0; i < files.length; i++) {
         var formdata = new FormData();
         formdata.append("file", files[i]);
         reqs.push(
           ax.post(`/share/${share.id}/attachments`, formdata, {
             onUploadProgress: event => {
-              progress[i] = event.loaded * 100 / files[i].size;
+              if (!event.lengthComputable) {
+                this.progresses[i] = 100;
+              } else {
+                this.progresses[i] = (event.loaded * 100) / event.total; // oder file.size??
+              }
             }
           })
         );
       }
-      this.progresses = progress;
-      console.log(this.progresses);
       // and execute them at once
       Promise.all(reqs)
         .then(() => {
