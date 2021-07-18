@@ -11,6 +11,7 @@ const routes = [
   },
   {
     path: "/download/:id",
+    alias: "/d/:id",
     name: "Download",
     component: () => import("@/views/Download.vue")
   },
