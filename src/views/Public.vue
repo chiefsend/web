@@ -30,7 +30,6 @@ export default {
   created() {
     ax.get("/shares").then(res => {
       this.shares = res.data;
-      console.log(res.data);
     });
   }
 };
