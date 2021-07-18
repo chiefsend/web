@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title>Select you Files</v-card-title>
+    <v-card-title>Select your Files</v-card-title>
     <v-card-text>
       <v-row>
         <v-file-input

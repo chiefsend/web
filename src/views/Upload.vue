@@ -54,7 +54,8 @@ export default {
       this.$refs.upload.uploadAll(share, files);
       this.step++;
     },
-    uploadToShare() {
+    uploadToShare(share) {
+      this.$refs.share.generateLinks(share);
       this.step++;
     }
   }

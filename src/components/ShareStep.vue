@@ -1,11 +1,16 @@
 <template>
   <v-card>
-    Hallo
+    <v-card-title>Share your Files</v-card-title>
   </v-card>
 </template>
 
 <script>
 export default {
-  name: "ShareStep"
+  name: "ShareStep",
+  methods: {
+    generateLinks(share) {
+      console.log(share);
+    }
+  }
 };
 </script>

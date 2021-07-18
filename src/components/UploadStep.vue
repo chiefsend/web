@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    upload
+    <v-card-title>Uploading your Files</v-card-title>
   </v-card>
 </template>
 
@@ -11,18 +11,17 @@ export default {
   name: "UploadStep",
   methods: {
     uploadAll(share, files) {
+      // put all file upload requests in an array
       let reqs = [];
       for (let i = 0; i < files.length; i++) {
         var formdata = new FormData();
         formdata.append("file", files[i]);
         reqs.push(ax.post(`/share/${share.id}/attachments`, formdata)); // TODO maybe need multipart/form-data header?
       }
-
+      // and execute them at once
       Promise.all(reqs)
-        .then(function(results) {
-          console.log("uploaded all attachments");
-          console.log(results);
-          // this.$emit("done");
+        .then(() => {
+          this.$emit("done", share);
         })
         .catch(error => {
           console.error(error);
