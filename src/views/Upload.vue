@@ -1,7 +1,5 @@
 <template>
   <v-container>
-    <p>Upload</p>
-
     <v-stepper v-model="step">
       <v-stepper-header>
         <v-stepper-step step="1" :complete="step > 1">

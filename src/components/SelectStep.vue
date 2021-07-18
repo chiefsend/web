@@ -31,10 +31,22 @@
           ></v-select>
         </v-col>
       </v-row>
+
+      <v-row>
+        <v-col cols="5">
+          <v-text-field v-model="name" label="Name"></v-text-field>
+        </v-col>
+        <v-col cols="2">
+          <v-switch v-model="is_public" label="Public"></v-switch>
+        </v-col>
+        <v-col cols="5">
+          <v-text-field v-model="password" label="Password"></v-text-field>
+        </v-col>
+      </v-row>
     </v-card-text>
 
     <v-card-actions>
-      <v-btn @click="done()">
+      <v-btn block @click="done()">
         Upload
       </v-btn>
     </v-card-actions>
@@ -53,7 +65,9 @@ export default {
       limit_items: [1, 2, 5, 15, 50, 200, "unlimited"],
       limit: 50,
       files: null,
-      name: ""
+      name: "",
+      password: "",
+      is_public: false
     };
   },
   methods: {
@@ -62,8 +76,8 @@ export default {
         name: this.name,
         expires: null,
         donwload_limit: this.limit,
-        password: null,
-        is_temporary: false
+        password: this.password,
+        is_public: this.is_public
       })
         .then(res => {
           this.$emit("done", res.data, this.files);
