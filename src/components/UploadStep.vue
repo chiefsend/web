@@ -36,13 +36,19 @@ export default {
   name: "UploadStep",
   data() {
     return {
-      progress: 23,
       files: []
     };
   },
   computed: {
-    totalProgress: function() {
-      return (this.progresses[0] * 100) / this.progresses.length;
+    progress: function() { // FIXME doesent get updated really
+      let completedSize = 0;
+      let totalSize = 0;
+      for (let f in this.files) {
+        completedSize += f.progress * f.size;
+        totalSize += f.size;
+      }
+      console.log(completedSize / totalSize); // FIXME NaN
+      return completedSize / totalSize;
     }
   },
   methods: {
@@ -66,7 +72,9 @@ export default {
               if (!event.lengthComputable) {
                 this.files[i].progress = 100;
               } else {
-                this.files[i].progress = (event.loaded * 100) / event.total;
+                this.files[i].progress = Math.round(
+                  (event.loaded * 100) / event.total
+                );
               }
             }
           })
