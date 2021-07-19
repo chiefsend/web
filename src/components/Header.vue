@@ -8,7 +8,7 @@
     </router-link>
 
     <router-link to="/upload">
-      <v-btn>Upload</v-btn>
+      <v-btn color="primary">Upload</v-btn>
     </router-link>
   </v-app-bar>
 </template>
