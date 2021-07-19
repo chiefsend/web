@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <v-layout row wrap>
-      <v-flex v-for="sh in shares" :key="sh.id" class="ma-4">
+    <v-row>
+      <v-col v-for="sh in shares" :key="sh.id" class="ma-2">
         <v-card class="share">
           <v-card-title v-if="sh.name">{{ sh.name }}</v-card-title>
           <v-card-title v-else>{{ sh.id }}</v-card-title>
@@ -21,8 +21,8 @@
             </router-link>
           </v-card-actions>
         </v-card>
-      </v-flex>
-    </v-layout>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
