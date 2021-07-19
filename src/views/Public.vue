@@ -6,7 +6,7 @@
           <v-card-title v-if="sh.name">{{ sh.name }}</v-card-title>
           <v-card-title v-else>{{ sh.id }}</v-card-title>
 
-          <v-card-subtitle>{{ shareSize(sh) }} </v-card-subtitle>
+          <v-card-subtitle>{{ shareSize(sh) | filesize }} </v-card-subtitle>
           <v-card-subtitle v-if="sh.expires">
             expires: {{ sh.expires }}
           </v-card-subtitle>

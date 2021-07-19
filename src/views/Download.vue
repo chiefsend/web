@@ -8,7 +8,7 @@
         <v-list>
           <v-list-item v-for="file of share.files" :key="file.id">
             <v-list-item-title>{{ file.filename }}</v-list-item-title>
-            <v-list-item-subtitle>{{ file.filesize }}</v-list-item-subtitle>
+            <v-list-item-subtitle>{{ file.filesize | filesize }}</v-list-item-subtitle>
             <v-list-item-action>
               <v-btn
                 outlined
