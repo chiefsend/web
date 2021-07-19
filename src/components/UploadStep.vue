@@ -40,14 +40,14 @@ export default {
     };
   },
   computed: {
-    progress: function() { // FIXME doesent get updated really
+    progress: function() {
       let completedSize = 0;
       let totalSize = 0;
-      for (let f in this.files) {
+      for (let f of this.files) {
         completedSize += f.progress * f.size;
         totalSize += f.size;
       }
-      console.log(completedSize / totalSize); // FIXME NaN
+      console.log(completedSize / totalSize);
       return completedSize / totalSize;
     }
   },
