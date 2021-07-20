@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card>
+    <v-card class="mx-lg-16">
       <v-card-title>Download</v-card-title>
       <v-card-subtitle>Limit: {{ share.download_limit }}</v-card-subtitle>
       <v-card-subtitle>Expires: {{ share.expires }}</v-card-subtitle>
@@ -11,7 +11,7 @@
             <v-list-item-subtitle>
               {{ file.filesize | filesize }}
             </v-list-item-subtitle>
-            <v-list-item-action>
+            <v-list-item-action class="mr-5">
               <v-btn
                 outlined
                 color="primary"
@@ -61,22 +61,39 @@ export default {
       .then(res => {
         this.share = res.data;
       })
-      .catch(() => {
-        this.sheet = true;
+      .catch(error => {
+        if (error.response.status == 401) {
+          this.sheet = true;
+        } else {
+          console.log(error); // FIXME display error
+        }
       });
   },
   methods: {
     download(url) {
-      ax.get(url, {
-        responseType: "blob",
-        auth: {
-          username: this.id,
-          password: this.password
-        }
-      }).then(res => {
-        let fileName = res.headers["content-disposition"].split("filename=")[1];
-        fileDownload(res.data, fileName);
-      });
+      let req;
+      if (this.password != "") {
+        req = ax.get(url, {
+          responseType: "blob",
+          auth: {
+            username: this.id,
+            password: this.password
+          }
+        });
+      } else {
+        req = ax.get(url);
+      }
+
+      req
+        .then(res => {
+          let fileName = res.headers["content-disposition"].split(
+            "filename="
+          )[1];
+          fileDownload(res.data, fileName);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
     handlePassword(value) {
       this.password = value;
