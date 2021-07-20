@@ -5,6 +5,16 @@ Vue.use(VueRouter);
 
 const routes = [
   {
+    path: "/privacy",
+    name: "Privacy",
+    component: () => import("@/views/Privacy.vue")
+  },
+  {
+    path: "/imprint",
+    name: "Imprint",
+    component: () => import("@/views/Imprint.vue")
+  },
+  {
     path: "/upload",
     name: "Upload",
     component: () => import("@/views/Upload.vue")
