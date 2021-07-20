@@ -7,33 +7,38 @@ const routes = [
   {
     path: "/privacy",
     name: "Privacy",
-    component: () => import("@/views/Privacy.vue")
+    component: () =>
+      import(/* webpackChunkName: "text" */ "@/views/Privacy.vue")
   },
   {
     path: "/imprint",
     name: "Imprint",
-    component: () => import("@/views/Imprint.vue")
+    component: () =>
+      import(/* webpackChunkName: "text" */ "@/views/Imprint.vue")
   },
   {
     path: "/upload",
     name: "Upload",
-    component: () => import("@/views/Upload.vue")
+    component: () =>
+      import(/* webpackChunkName: "upload" */ "@/views/Upload.vue")
   },
   {
     path: "/download/:id",
     alias: "/d/:id",
     name: "Download",
-    component: () => import("@/views/Download.vue")
+    component: () =>
+      import(/* webpackChunkName: "download" */ "@/views/Download.vue")
   },
   {
     path: "/public",
     name: "Public",
-    component: () => import("@/views/Public.vue")
+    component: () =>
+      import(/* webpackChunkName: "download" */ "@/views/Public.vue")
   },
   {
     path: "/",
     name: "Home",
-    component: () => import("@/views/Home.vue")
+    component: () => import(/* webpackChunkName: "upload" */ "@/views/Home.vue")
   }
 ];
 
