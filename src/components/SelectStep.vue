@@ -72,6 +72,7 @@ export default {
   },
   methods: {
     done() {
+      // open share
       ax.post("/shares", {
         name: this.name,
         expires: null,
