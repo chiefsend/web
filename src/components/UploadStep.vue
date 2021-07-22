@@ -31,6 +31,7 @@
 
 <script>
 import ax from "@/api";
+import em from "@/events";
 
 export default {
   name: "UploadStep",
@@ -89,10 +90,14 @@ export default {
               console.log(res.data);
               this.$emit("done", res.data);
             })
-            .catch(error => console.log(error));
+            .catch(error => {
+              console.error({ error });
+              em.emit("error", error.message);
+            });
         })
         .catch(error => {
-          console.error(error);
+          console.error({ error });
+          em.emit("error", error.message);
         });
     }
   }

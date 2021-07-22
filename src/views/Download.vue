@@ -46,6 +46,7 @@
 import ax from "@/api";
 import fileDownload from "js-file-download";
 import Password from "../components/Password.vue";
+import em from "@/events";
 
 export default {
   name: "Download",
@@ -66,11 +67,12 @@ export default {
         this.authenticated = true;
       })
       .catch(error => {
-        if (error.response.status == 401) {
+        if (error.response && error.response.status == 401) {
           this.authenticated = false;
           this.dialog = true;
         } else {
-          console.log(error);
+          console.error({ error });
+          em.emit("error", error.message);
         }
       });
   },
@@ -98,7 +100,8 @@ export default {
           fileDownload(res.data, filename);
         })
         .catch(error => {
-          console.log(error);
+          console.error({ error });
+          em.emit("error", error.message);
         });
     },
     handlePassword(value) {
@@ -116,11 +119,12 @@ export default {
           this.authenticated = true;
           this.dialog = false;
         })
-        .catch(err => {
-          if (err.response.status == 401) {
+        .catch(error => {
+          if (error.response && error.response.status == 401) {
             this.wrongPassword = true;
           } else {
-            console.log(err);
+            console.error({ error });
+            em.emit("error", error.message);
           }
         });
     }

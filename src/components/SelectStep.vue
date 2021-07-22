@@ -55,6 +55,7 @@
 
 <script>
 import ax from "@/api";
+import em from "@/events";
 
 export default {
   name: "SelectStep",
@@ -84,7 +85,8 @@ export default {
           this.$emit("done", res.data, this.files);
         })
         .catch(error => {
-          console.log(error);
+          console.log({ error });
+          em.emit("error", error.message);
         });
     }
   }

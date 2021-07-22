@@ -28,6 +28,7 @@
 
 <script>
 import ax from "@/api";
+import em from "@/events";
 
 export default {
   name: "Public",
@@ -42,7 +43,8 @@ export default {
         this.shares = res.data;
       })
       .catch(error => {
-        console.log(error);
+        console.error({ error });
+        em.emit("error", error.message);
       });
   },
   methods: {
