@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card class="mx-lg-16">
+    <v-card class="mx-lg-16" v-if="authenticated">
       <v-card-title>Download</v-card-title>
       <v-card-subtitle>Limit: {{ share.download_limit }}</v-card-subtitle>
       <v-card-subtitle>Expires: {{ share.expires }}</v-card-subtitle>
@@ -33,9 +33,10 @@
     </v-card>
 
     <Password
-      :sheet="sheet"
+      :dialog="dialog"
       :id="share.id"
-      @close="sheet = false"
+      :wrongPassword="wrongPassword"
+      @close="dialog = false"
       @password="handlePassword"
     />
   </v-container>
@@ -52,27 +53,32 @@ export default {
   data() {
     return {
       share: {},
-      sheet: false,
-      password: ""
+      dialog: false,
+      password: "",
+      authenticated: false,
+      wrongPassword: false
     };
   },
   mounted() {
     ax.get(`/share/${this.$route.params.id}`)
       .then(res => {
         this.share = res.data;
+        this.authenticated = true;
       })
       .catch(error => {
         if (error.response.status == 401) {
-          this.sheet = true;
+          this.authenticated = false;
+          this.dialog = true;
         } else {
-          console.log(error); // FIXME display error
+          console.log(error);
         }
       });
   },
   methods: {
     download(url) {
+      // compose download request
       let req;
-      if (this.password != "") {
+      if (this.authenticated) {
         req = ax.get(url, {
           responseType: "blob",
           auth: {
@@ -83,32 +89,39 @@ export default {
       } else {
         req = ax.get(url);
       }
-
+      // send request
       req
         .then(res => {
-          let fileName = res.headers["content-disposition"].split(
+          let filename = res.headers["content-disposition"].split(
             "filename="
           )[1];
-          fileDownload(res.data, fileName);
+          fileDownload(res.data, filename);
         })
         .catch(error => {
           console.log(error);
         });
     },
     handlePassword(value) {
+      const id = this.$route.params.id;
+      console.log(id);
       this.password = value;
-
-      ax.get(`/share/${this.$route.params.id}`, {
+      ax.get(`/share/${id}`, {
         auth: {
-          username: this.id,
+          username: id,
           password: value
         }
       })
         .then(res => {
-          console.log(res.data);
+          this.share = res.data;
+          this.authenticated = true;
+          this.dialog = false;
         })
         .catch(err => {
-          console.log(err);
+          if (err.response.status == 401) {
+            this.wrongPassword = true;
+          } else {
+            console.log(err);
+          }
         });
     }
   }

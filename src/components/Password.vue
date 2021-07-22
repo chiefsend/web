@@ -1,14 +1,16 @@
 <template>
-  <v-dialog persistent v-model="sheet" max-width="500px">
+  <v-dialog persistent v-model="dialog" max-width="500px">
     <v-card>
-      <v-card-text>
-        <v-alert dense type="error">Password required</v-alert>
-        <!-- <v-alert dense type="error">wrong Password</v-alert> -->
+      <v-card-text class="pt-4">
+        <v-alert dense type="error" v-if="wrongPassword"
+          >wrong Password!</v-alert
+        >
+        <v-alert dense type="error" v-else>Password required!</v-alert>
 
         <v-text-field
+          v-model="password"
           :append-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'"
           :type="show_password ? 'text' : 'password'"
-          name="input-10-2"
           @click:append="show_password = !show_password"
         ></v-text-field>
 
@@ -33,8 +35,9 @@
 export default {
   name: "Password",
   props: {
-    sheet: Boolean,
-    id: String
+    dialog: Boolean,
+    id: String,
+    wrongPassword: Boolean
   },
   data() {
     return {
