@@ -3,7 +3,7 @@
     <v-card-title>Uploading your Files</v-card-title>
     <v-card-text>
       <v-list>
-        <v-list-item v-for="f in files" :key="f.name">
+        <v-list-item v-for="(f, i) in files" :key="i">
           <v-list-item-avatar>
             <v-progress-circular
               v-if="f.progress < 100"

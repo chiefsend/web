@@ -1,15 +1,30 @@
 <template>
   <v-card>
     <v-card-title>Select your Files</v-card-title>
+    <v-card-subtitle>
+      {{ files.length }} files selected &middot; 50 MB (TODO) remaining
+    </v-card-subtitle>
+
     <v-card-text>
       <v-row>
-        <v-file-input
-          v-model="files"
-          counter
-          show-size
-          multiple
-          clearable
-        ></v-file-input>
+        <v-col>
+          <v-file-input
+            v-model="currFiles"
+            hide-input
+            multiple
+            @change="updateFiles"
+          ></v-file-input>
+          <v-chip-group v-if="files.length > 0" column>
+            <v-chip
+              v-for="(file, index) in files"
+              :key="index"
+              close
+              @click:close="removeFile(index)"
+            >
+              {{ file.name }}
+            </v-chip>
+          </v-chip-group>
+        </v-col>
       </v-row>
 
       <v-row>
@@ -65,13 +80,20 @@ export default {
       expire: 1440,
       limit_items: [1, 2, 5, 15, 50, 200, "unlimited"],
       limit: 50,
-      files: null,
+      currFiles: null,
+      files: [],
       name: "",
       password: "",
       is_public: false
     };
   },
   methods: {
+    updateFiles() {
+      this.files = [...this.currFiles, ...this.files];
+    },
+    removeFile(index) {
+      this.files.splice(index, 1);
+    },
     done() {
       // open share
       ax.post("/shares", {
