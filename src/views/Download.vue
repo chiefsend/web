@@ -106,7 +106,6 @@ export default {
     },
     handlePassword(value) {
       const id = this.$route.params.id;
-      console.log(id);
       this.password = value;
       ax.get(`/share/${id}`, {
         auth: {

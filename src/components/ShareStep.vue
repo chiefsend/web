@@ -23,7 +23,6 @@ export default {
   methods: {
     generateLinks(share) {
       this.share = share;
-      console.log(share);
     },
     copyUrl() {
       const el = document.createElement("textarea");

@@ -9,7 +9,6 @@ Vue.config.productionTip = false;
 
 // handle errors
 window.onerror = event => {
-  console.log(event);
   em.emit("error", event.toString());
 };
 // handle rejected promises

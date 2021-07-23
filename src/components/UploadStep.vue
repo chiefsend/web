@@ -48,7 +48,6 @@ export default {
         completedSize += f.progress * f.size;
         totalSize += f.size;
       }
-      console.log(completedSize / totalSize);
       return completedSize / totalSize;
     }
   },
