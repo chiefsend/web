@@ -2,7 +2,7 @@
   <v-card>
     <v-card-title>Select your Files</v-card-title>
     <v-card-subtitle>
-      {{ files.length }} files selected &middot; 50 MB (TODO) remaining
+      {{ files.length }} files selected &middot; {{ completeSize | filesize }}
     </v-card-subtitle>
 
     <v-card-text>
@@ -84,12 +84,17 @@ export default {
       files: [],
       name: "",
       password: "",
-      is_public: false
+      is_public: false,
+      completeSize: 0
     };
   },
   methods: {
     updateFiles() {
       this.files = [...this.currFiles, ...this.files];
+      this.completeSize = this.files.reduce(
+        (size, file) => size + file.size,
+        0
+      );
     },
     removeFile(index) {
       this.files.splice(index, 1);
