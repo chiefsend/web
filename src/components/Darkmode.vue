@@ -1,5 +1,14 @@
 <template>
-  <v-btn small color="primary" fab label="Darkmode" @click="setDarkmode()">
+  <v-btn
+    small
+    color="primary"
+    fab
+    label="Darkmode"
+    @click="
+      darkmode = !darkmode;
+      setDarkmode();
+    "
+  >
     <v-icon v-if="darkmode">
       mdi-weather-night
     </v-icon>
@@ -27,7 +36,6 @@ export default {
   },
   methods: {
     setDarkmode() {
-      this.darkmode = !this.darkmode;
       if (process.browser) {
         localStorage.setItem("DarkMode", this.darkmode);
       }
