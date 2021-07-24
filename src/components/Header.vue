@@ -3,11 +3,7 @@
     <v-app-bar-title>ChiefSend</v-app-bar-title>
     <v-spacer></v-spacer>
 
-    <v-switch
-      v-model="darkmode"
-      label="Darkmode"
-      @change="setDarkmode()"
-    ></v-switch>
+    <Darkmode />
 
     <router-link to="/public">
       <v-btn text>Public</v-btn>
@@ -20,28 +16,9 @@
 </template>
 
 <script>
+import Darkmode from "./Darkmode.vue";
 export default {
-  name: "Header",
-  data() {
-    return {
-      darkmode: false
-    };
-  },
-  created() {
-    if (process.browser) {
-      if (localStorage.getItem("DarkMode")) {
-        this.darkmode = localStorage.getItem("DarkMode") === "true";
-      }
-      this.setDarkmode();
-    }
-  },
-  methods: {
-    setDarkmode() {
-      if (process.browser) {
-        localStorage.setItem("DarkMode", this.darkmode);
-      }
-      this.$vuetify.theme.dark = this.darkmode;
-    }
-  }
+  components: { Darkmode },
+  name: "Header"
 };
 </script>
