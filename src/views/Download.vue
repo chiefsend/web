@@ -84,7 +84,7 @@ export default {
         req = ax.get(url, {
           responseType: "blob",
           auth: {
-            username: this.id,
+            username: this.share.id,
             password: this.password
           }
         });
