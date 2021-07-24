@@ -17,5 +17,5 @@ export function filesize(value) {
  * @param {*} value iso timestamp
  */
 export function datetime(value) {
-  dayjs(value).format("D-M-YYYY - h:mm");
+  return dayjs(value).format("D.M.YYYY - h:mm");
 }

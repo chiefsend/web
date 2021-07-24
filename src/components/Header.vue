@@ -37,7 +37,9 @@ export default {
   },
   methods: {
     setDarkmode() {
-      localStorage.setItem("DarkMode", this.darkmode);
+      if (process.browser) {
+        localStorage.setItem("DarkMode", this.darkmode);
+      }
       this.$vuetify.theme.dark = this.darkmode;
     }
   }

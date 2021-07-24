@@ -3,7 +3,7 @@
     <v-card class="mx-lg-16" v-if="authenticated">
       <v-card-title>Download</v-card-title>
       <v-card-subtitle>Limit: {{ share.download_limit }}</v-card-subtitle>
-      <v-card-subtitle>Expires: {{ share.expires }}</v-card-subtitle>
+      <v-card-subtitle>Expires: {{ share.expires | datetime }}</v-card-subtitle>
       <v-card-text>
         <v-list>
           <v-list-item v-for="file of share.files" :key="file.id">

@@ -8,7 +8,7 @@
 
           <v-card-subtitle>{{ shareSize(sh) | filesize }} </v-card-subtitle>
           <v-card-subtitle v-if="sh.expires">
-            expires: {{ sh.expires }}
+            expires: {{ sh.expires | datetime }}
           </v-card-subtitle>
 
           <v-card-text>{{ sh.files.length }} files</v-card-text>

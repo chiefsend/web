@@ -122,7 +122,7 @@ export default {
       this.files.splice(index, 1);
     },
     expiresTime() {
-      if (this.expires == "unlimited") {
+      if (this.expires === -1) {
         return null;
       } else {
         return dayjs()
@@ -134,8 +134,8 @@ export default {
       // open share
       let obj = {
         ...(this.name != "" && { name: this.name }),
-        ...(this.expires !== "unlimited" && { expires: this.expiresTime() }),
-        ...(this.limit !== "unlimited" && { donwload_limit: this.limit }),
+        ...(this.expires !== -1 && { expires: this.expiresTime() }),
+        ...(this.limit !== -1 && { donwload_limit: this.limit }),
         ...(this.password != "" && { password: this.password }),
         ...{ is_public: this.is_public }
       };
