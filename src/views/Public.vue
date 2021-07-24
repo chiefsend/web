@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col v-for="sh in shares" :key="sh.id" class="ma-2">
-        <v-card class="share">
+        <v-card max-width="500px" min-width="250px" height="200px">
           <v-card-title v-if="sh.name">{{ sh.name }}</v-card-title>
           <v-card-title v-else>{{ sh.id }}</v-card-title>
 
@@ -60,11 +60,6 @@ export default {
 </script>
 
 <style scoped>
-.share {
-  width: 400px;
-  height: 200px;
-}
-
 .share-open {
   position: absolute;
   bottom: 1em;

@@ -1,6 +1,8 @@
 <template>
   <v-app-bar app>
-    <v-app-bar-title>ChiefSend</v-app-bar-title>
+    <router-link to="/" style="text-decoration: none; color: inherit;">
+      <v-app-bar-title>ChiefSend</v-app-bar-title>
+    </router-link>
     <v-spacer></v-spacer>
 
     <Darkmode />
