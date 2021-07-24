@@ -30,19 +30,25 @@
       <v-row>
         <v-col>
           <v-select
+            dense
             outlined
-            label="Download Limit"
-            :items="limit_items"
-            v-model="limit"
+            label="Expiration Time"
+            :items="expires_items"
+            item-text="text"
+            item-value="value"
+            v-model="expires"
           ></v-select>
         </v-col>
 
         <v-col>
           <v-select
+            dense
             outlined
-            label="Expiration Time"
-            :items="expire_items"
-            v-model="expire"
+            label="Download Limit"
+            :items="limit_items"
+            item-text="text"
+            item-value="value"
+            v-model="limit"
           ></v-select>
         </v-col>
       </v-row>
@@ -61,7 +67,7 @@
     </v-card-text>
 
     <v-card-actions>
-      <v-btn block @click="done()">
+      <v-btn block @click="done()" color="primary">
         Upload
       </v-btn>
     </v-card-actions>
@@ -71,14 +77,30 @@
 <script>
 import ax from "@/api";
 import em from "@/events";
+import dayjs from "dayjs";
 
 export default {
   name: "SelectStep",
   data() {
     return {
-      expire_items: [1, 5, 60, 1440, 43200],
-      expire: 1440,
-      limit_items: [1, 2, 5, 15, 50, 200, "unlimited"],
+      expires_items: [
+        { text: "2 Minutes", value: 2 },
+        { text: "5 Minutes", value: 5 },
+        { text: "1 Hour", value: 60 },
+        { text: "1 Day", value: 1440 },
+        { text: "1 Month", value: 43200 },
+        { text: "unlimited", value: -1 }
+      ],
+      expires: 1440,
+      limit_items: [
+        { text: "1 Downloads", value: 1 },
+        { text: "2 Downloads", value: 2 },
+        { text: "5 Downloads", value: 5 },
+        { text: "15 Downloads", value: 15 },
+        { text: "50 Downloads", value: 50 },
+        { text: "200 Downloads", value: 200 },
+        { text: "unlimited", value: -1 }
+      ],
       limit: 50,
       currFiles: null,
       files: [],
@@ -99,20 +121,30 @@ export default {
     removeFile(index) {
       this.files.splice(index, 1);
     },
+    expiresTime() {
+      if (this.expires == "unlimited") {
+        return null;
+      } else {
+        return dayjs()
+          .add(this.expires, "minute")
+          .toISOString();
+      }
+    },
     done() {
       // open share
-      ax.post("/shares", {
-        name: this.name,
-        expires: null,
-        donwload_limit: this.limit,
-        password: this.password,
-        is_public: this.is_public
-      })
+      let obj = {
+        ...(this.name != "" && { name: this.name }),
+        ...(this.expires !== "unlimited" && { expires: this.expiresTime() }),
+        ...(this.limit !== "unlimited" && { donwload_limit: this.limit }),
+        ...(this.password != "" && { password: this.password }),
+        ...{ is_public: this.is_public }
+      };
+      console.log(obj);
+      ax.post("/shares", obj)
         .then(res => {
           this.$emit("done", res.data, this.files);
         })
         .catch(error => {
-          console.log({ error });
           em.emit("error", error.message);
         });
     }
