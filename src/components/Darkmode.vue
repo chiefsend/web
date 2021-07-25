@@ -10,10 +10,10 @@
     "
   >
     <v-icon v-if="darkmode">
-      mdi-weather-night
+      mdi-weather-sunny
     </v-icon>
     <v-icon v-else>
-      mdi-weather-sunny
+      mdi-weather-night
     </v-icon>
   </v-btn>
 </template>
