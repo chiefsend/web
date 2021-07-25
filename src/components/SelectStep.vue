@@ -61,7 +61,13 @@
           <v-switch v-model="is_public" label="Public"></v-switch>
         </v-col>
         <v-col cols="5">
-          <v-text-field v-model="password" label="Password"></v-text-field>
+          <v-text-field
+            v-model="password"
+            label="Password"
+            :append-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="show_password ? 'text' : 'password'"
+            @click:append="show_password = !show_password"
+          ></v-text-field>
         </v-col>
       </v-row>
     </v-card-text>
@@ -107,7 +113,8 @@ export default {
       name: "",
       password: "",
       is_public: false,
-      completeSize: 0
+      completeSize: 0,
+      show_password: false
     };
   },
   methods: {

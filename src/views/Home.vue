@@ -1,5 +1,5 @@
 <template>
-  <v-row align="center" justify="center" class="cover">
+  <v-row align="center" justify="center" class="cover white--text">
     <v-col class="text-center" cols="12">
       <h1 class="text-h4 font-weight-thin mb-4">
         ChiefSend
