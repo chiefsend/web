@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row v-if="shares.length > 0">
       <v-col v-for="sh in shares" :key="sh.id" class="ma-2">
         <v-card max-width="500px" min-width="250px" height="200px">
           <v-card-title v-if="sh.name">{{ sh.name }}</v-card-title>
@@ -23,6 +23,9 @@
         </v-card>
       </v-col>
     </v-row>
+    <p v-else>
+      There are no public Shares yet.
+    </p>
   </v-container>
 </template>
 

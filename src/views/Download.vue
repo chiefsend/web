@@ -67,11 +67,14 @@ export default {
         this.authenticated = true;
       })
       .catch(error => {
-        if (error.response && error.response.status == 401) {
+        console.error({ error });
+        if (error.response.status == 401) {
           this.authenticated = false;
           this.dialog = true;
+        } else if (error.response && error.response.status == 404) {
+          this.dialog = false;
+          this.$router.push({ name: "404" });
         } else {
-          console.error({ error });
           em.emit("error", error.message);
         }
       });

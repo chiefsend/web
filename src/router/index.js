@@ -39,6 +39,12 @@ const routes = [
     path: "/",
     name: "Home",
     component: () => import(/* webpackChunkName: "upload" */ "@/views/Home.vue")
+  },
+  {
+    path: "**",
+    name: "404",
+    component: () =>
+      import(/* webpackChunkName: "download" */ "@/views/404.vue")
   }
 ];
 
