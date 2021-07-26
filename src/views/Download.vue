@@ -31,6 +31,11 @@
         </v-btn>
       </v-card-text>
     </v-card>
+    <p v-else>
+      You are not authenticated to view this page.
+      <br />
+      Return <router-link to="/">Home</router-link>
+    </p>
 
     <Password
       :dialog="dialog"
